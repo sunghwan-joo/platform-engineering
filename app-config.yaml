@@ -77,6 +77,8 @@ auth:
       # development:
         # clientId: ${GITHUB_CLIENT_ID}
         # clientSecret: ${GITHUB_CLIENT_SECRET}
+  # 게스트 인증 추가 24.12.10
+  allowGuestAccess: true
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
