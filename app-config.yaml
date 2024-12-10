@@ -63,10 +63,15 @@ techdocs:
     type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
 
 auth:
+  environment: development
   # see https://backstage.io/docs/auth/ to learn about auth providers
   providers:
     # See https://backstage.io/docs/auth/guest/provider
-    guest: {}
+    # guest: {}
+    github:
+      development:
+        clientId: ${GITHUB_CLIENT_ID}
+        clientSecret: ${GITHUB_CLIENT_SECRET}
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
@@ -93,6 +98,24 @@ catalog:
       target: ../../examples/org.yaml
       rules:
         - allow: [User, Group]
+
+    # Local example catalog files 설정 - 24.12.10
+    - type: file
+      target: ../../examples/catalog/*.yaml
+
+  # catalog providers 설정 - 24.12.10
+  providers:
+    github:
+      providerId: 'default'
+      organization: 'sunghwan-joo'
+      filters:
+        branch: 'main'           # 스캔할 브랜치
+        repository: '.*'         # 모든 레포지토리 스캔
+      schedule:                  # 자동 스캔 주기
+        frequency: 
+          minutes: 30           # 30분마다 스캔
+        timeout:
+          minutes: 3
 
     ## Uncomment these lines to add more example data
     # - type: url
