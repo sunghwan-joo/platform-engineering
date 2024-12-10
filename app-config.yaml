@@ -107,7 +107,7 @@ catalog:
   providers:
     github:
       providerId: 'default'
-      organization: 'sunghwan-joo'
+      organization: 'ktds'
       filters:
         branch: 'main'           # 스캔할 브랜치
         repository: '.*'         # 모든 레포지토리 스캔
