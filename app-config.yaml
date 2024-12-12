@@ -16,7 +16,7 @@ backend:
   listen:
     port: 7007
     # Uncomment the following host directive to bind to specific interfaces
-    # host: 127.0.0.1
+    host: localhost
   csp:
     connect-src: ["'self'", 'http:', 'https:']
     # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
@@ -35,6 +35,13 @@ backend:
   auth:
       keys:
         - secret: temporary-secret
+  # 게스트 인증 허용
+      providers: 
+        guest:
+        enabled: true
+  reading:
+      allow:
+        - host: petstore.swagger.io
   
 integrations:
   github:
@@ -54,6 +61,9 @@ proxy:
   #   '/test':
   #     target: 'https://example.com'
   #     changeOrigin: true
+  '/api':
+      target: http://localhost:7007
+      changeOrigin: true
 
 # Reference documentation http://backstage.io/docs/features/techdocs/configuration
 # Note: After experimenting with basic setup, use CI/CD to generate docs
@@ -69,17 +79,22 @@ techdocs:
 auth:
   environment: development
   # see https://backstage.io/docs/auth/ to learn about auth providers
-  providers: {}
+  providers:
     # See https://backstage.io/docs/auth/guest/provider
     # guest: {}
+    guest:
+      enabled: true
   # providers 설정 - 24.12.10
-    # github:
-      # development:
-        # clientId: ${GITHUB_CLIENT_ID}
-        # clientSecret: ${GITHUB_CLIENT_SECRET}
+    github:
+      development:
+        clientId: ${GITHUB_CLIENT_ID}
+        clientSecret: ${GITHUB_CLIENT_SECRET}
   # 게스트 인증 추가 24.12.10
   allowGuestAccess: true
 
+# 기본 로그인 방식을 게스트로 설정
+# signInPage: guest  
+  
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
